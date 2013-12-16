@@ -1,8 +1,11 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Christopher Font
-;;; Emacs init.el
-;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; init.el --- Summary
+;;; Author: Chris Font
+;;; Commentary:
+;;;; This is my person Emacs init file.  It requires an additional packages file
+;;;; as well as a pianobar configuration file.  If you are using my init from my
+;;;; Github, you will have received this dependencies as well.
 
+;;; Code:
 ;; General Config
 (add-to-list 'load-path "~/.emacs.d/")
 
@@ -41,14 +44,20 @@
 ;;; C/C++
 (setq c-default-style "linux"
       c-basic-offset 4)
+
 ;;;; CMake
 (defun maybe-cmake-project-hook ()
+  "Function to determine if projects use CMake or regular Make."
   (if (file-exists-p "CMakeLists.txt") (cmake-project-mode)))
 (add-hook 'c-mode-hook 'maybe-cmake-project-hook)
 (add-hook 'c++-mode-hook 'maybe-cmake-project-hook)
 
 ;;; Elixir Modes
 (require 'elixir-mode)
+
+;;; Go Modes
+(require 'go-mode-load)
+(add-hook 'before-save-hook 'gofmt-before-save)
 
 ;;; Haskell Modes
 (require 'haskell-mode)
@@ -80,3 +89,5 @@
 ;;; Python Modes
 (require 'elpy)
 
+(provide 'init)
+;;; init.el ends here
