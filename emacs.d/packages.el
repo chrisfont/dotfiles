@@ -22,9 +22,9 @@
 ;; Required Package Lists
 (defvar *required-packages*
   '(clojure-mode flycheck flycheck-d-unittest flycheck-color-mode-line flycheck-tip
-		 flycheck-ledger graphene go-mode go-autocomplete go-eldoc haskell-mode
-		 lua-mode magit markdown-mode monokai-theme org pianobar python-mode
-		 pyflakes slime zeal-at-point))
+		 flycheck-ledger graphene go-mode go-autocomplete go-eldoc go-errcheck
+		 haskell-mode lua-mode magit markdown-mode monokai-theme org pianobar
+		 python-mode pyflakes slime zeal-at-point))
 
 
 ;; Package auto-installation code -- Thanks bbatsov

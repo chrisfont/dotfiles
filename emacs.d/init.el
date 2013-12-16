@@ -57,7 +57,14 @@
 
 ;;; Go Modes
 (require 'go-mode-load)
+(require 'go-errcheck-autoloads)
 (add-hook 'before-save-hook 'gofmt-before-save)
+(add-hook 'go-mode-hook (lambda ()
+			  (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports)))
+(add-hook 'go-mode-hook (lambda ()
+			  (local-set-key (kbd "C-c i") 'go-goto-imports)))
+(add-hook 'go-mode-hook (lambda ()
+			  (local-set-key (kbd "C-c C-i") 'go-errcheck)))
 
 ;;; Haskell Modes
 (require 'haskell-mode)
