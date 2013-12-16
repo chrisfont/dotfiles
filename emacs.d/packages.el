@@ -19,9 +19,9 @@
 
 ;; Required Package Lists
 (defvar *required-packages*
-  '(clojure-mode flymake flymake-python-pyflakes flymake-hlint flymake-haskell-multi
-		 flymake-json flymake-lua flymake-shell graphene haskell-mode lua-mode
-		 magit markdown-mode monokai-theme org pianobar python-mode pyflakes slime zeal-at-point))
+  '(clojure-mode flycheck flycheck-d-unittest flycheck-color-mode-line flycheck-tip
+		 flycheck-ledger graphene haskell-mode lua-mode magit markdown-mode
+		 monokai-theme org pianobar python-mode pyflakes slime zeal-at-point))
 
 
 ;; Package auto-installation code -- Thanks bbatsov

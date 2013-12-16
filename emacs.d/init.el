@@ -9,7 +9,8 @@
 ;; Elpa Config
 (load "packages.el")
 
-;; Gnus Config
+;; Flycheck
+(add-hook 'after-init-hook #'global-flycheck-mode)
 
 ;; Graphene
 (require 'graphene)
@@ -40,6 +41,14 @@
 ;;; C/C++
 (setq c-default-style "linux"
       c-basic-offset 4)
+;;;; CMake
+(defun maybe-cmake-project-hook ()
+  (if (file-exists-p "CMakeLists.txt") (cmake-project-mode)))
+(add-hook 'c-mode-hook 'maybe-cmake-project-hook)
+(add-hook 'c++-mode-hook 'maybe-cmake-project-hook)
+
+;;; Elixir Modes
+(require 'elixir-mode)
 
 ;;; Haskell Modes
 (require 'haskell-mode)
