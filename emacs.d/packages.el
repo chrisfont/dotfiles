@@ -1,3 +1,4 @@
+
 ;; Packages.el --- Summary
 ;; Emacs Configuration file
 
@@ -21,10 +22,7 @@
 
 ;; Required Package Lists
 (defvar *required-packages*
-  '(clojure-mode flycheck flycheck-d-unittest flycheck-color-mode-line flycheck-tip
-		 flycheck-ledger graphene go-mode go-autocomplete go-eldoc go-errcheck
-		 haskell-mode lua-mode magit markdown-mode monokai-theme org pianobar
-		 python-mode pyflakes slime zeal-at-point))
+  '(clojure-mode company company-go elixir-mode elpy flycheck flycheck-d-unittest flycheck-color-mode-line flycheck-tip flycheck-ledger geiser go-mode go-eldoc go-errcheck haskell-mode lua-mode kibit-mode magit markdown-mode monokai-theme org quack pianobar python-mode pyflakes rainbow-delimiters slime smartparens smex))
 
 
 ;; Package auto-installation code -- Thanks bbatsov

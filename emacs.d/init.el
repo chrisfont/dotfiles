@@ -6,6 +6,7 @@
 ;;;; Github, you will have received this dependencies as well.
 
 ;;; Code:
+
 ;; General Config
 (add-to-list 'load-path "~/.emacs.d/")
 
@@ -15,12 +16,35 @@
 ;; Flycheck
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
-;; Graphene
-(require 'graphene)
-
 ;; Look and Feel
-(load-theme 'monokai t)
-(column-number-mode t)
+(set-frame-parameter nil                   'font "Inconsolata-10")
+(setq                inhibit-splash-screen t)
+
+(tool-bar-mode       -1)
+
+(load-theme          'monokai              t)
+(column-number-mode  t)
+
+(setq-default indent-tabs-mode  nil)
+
+(setq scroll-margin             5)
+(setq scroll-conservatively     1)
+(setq scroll-down-aggressively 10)
+
+(setq-default ido-enable-flex-matching t)
+(setq-default ido-everywhere           t)
+(ido-mode     t)
+
+(require 'rainbow-delimiters)
+(global-rainbow-delimiters-mode)
+
+(require 'smartparens)
+(require 'smartparens-config)
+(smartparens-global-mode t)
+
+;;; Speedbar
+(require 'speedbar)
+(speedbar-add-supported-extension ".hs")
 
 ;; Magit
 (require 'magit)
@@ -30,20 +54,24 @@
 
 ;; OrgMode
 (require 'org-install)
-(add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
-(define-key global-map "\C-cl" 'org-store-link)
-(define-key global-map "\C-ca" 'org-agenda)
-(setq org-log-done t)
+(add-to-list           'auto-mode-alist '("\\.org$" . org-mode))
+(define-key global-map "\C-cl"          'org-store-link)
+(define-key global-map "\C-ca"          'org-agenda)
+(setq-default          org-log-done     t)
 
-;; Zeal-At-Point
-(require 'zeal-at-point)
-(global-set-key "\C-cs" 'zeal-at-point)
+;; Smex
+(smex-initialize)
+(global-set-key (kbd "M-x")         'smex)
+(global-set-key (kbd "M-x")         'smex-major-mode-commands)
+(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
 
 ;; Language Settings
 
 ;;; C/C++
-(setq c-default-style "linux"
-      c-basic-offset 4)
+(setq-default c-default-style  "linux"
+              c-basic-offset   4
+              tab-width        4
+              indent-tabs-mode nil)
 
 ;;;; CMake
 (defun maybe-cmake-project-hook ()
@@ -52,12 +80,25 @@
 (add-hook 'c-mode-hook 'maybe-cmake-project-hook)
 (add-hook 'c++-mode-hook 'maybe-cmake-project-hook)
 
+;;;; Clojure
+(require 'clojure-mode)
+(require 'kibit-mode)
+(add-hook 'clojure-mode-hook 'kibit-mode)
+(add-hook 'clojure-mode-hook 'flymake-mode-on)
+
+;;;; GGTags
+(add-hook 'c-mode-common-hook
+	  (lambda ()
+	    (when (derived-mode-p 'c-mode 'c++-mode)
+	      (ggtags-mode t))))
+
 ;;; Elixir Modes
 (require 'elixir-mode)
 
 ;;; Go Modes
 (require 'go-mode-load)
 (require 'go-errcheck-autoloads)
+;;(require 'go-autocomplete)
 (add-hook 'before-save-hook 'gofmt-before-save)
 (add-hook 'go-mode-hook (lambda ()
 			  (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports)))
@@ -68,8 +109,9 @@
 
 ;;; Haskell Modes
 (require 'haskell-mode)
+(require 'tidal)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc)
-(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
+(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 
 (define-key haskell-mode-map "\C-c h" 'haskell-hoogle)
 (add-hook 'haskell-mode-hook (lambda ()
@@ -83,8 +125,15 @@
 (slime-setup)
 (define-key slime-editing-map (kbd "\C-c m") 'slime-eval-last-expression)
 
-;;; Lisp (Clojure)
-(require 'clojure-mode)
+(setq common-lisp-hyperspec-root "file:///home/chris/.hyperspec/")
+
+(defun ddp-lispdoc ()
+  "Search lispdoc.com for symbol under cursor."
+  (interactive)
+  (let* ((symbol-at-point (symbol-at-point))
+	 (thing (symbol-name symbol-at-point)))
+    (browse-url (concat "http://lispdoc.com?q=" thing "&search=basic+search"))))
+
 
 ;;; Markdown Modes
 (add-hook 'markdown-mode-hook
@@ -95,6 +144,24 @@
 
 ;;; Python Modes
 (require 'elpy)
+
+;;;; SConstruct
+(setq auto-mode-alist
+      (cons '("SConstruct" . python-mode) auto-mode-alist))
+(setq auto-mode-alist
+      (cons '("SConscript" . python-mode) auto-mode-alist))
+
+;;;; AUTOCOMPLETE
+(add-hook 'after-init-hook 'global-auto-complete-mode nil)
+(add-hook 'after-init-hook 'global-company-mode)
+
+
+;;; Scheme/Racket
+(require 'quack)
+(eval-after-load 'scheme
+  '(define-key scheme-mode-map "\e\t" 'scheme-smart-complete))
+
+(setq lisp-indent-function 'scheme-smart-indent-function)
 
 (provide 'init)
 ;;; init.el ends here
