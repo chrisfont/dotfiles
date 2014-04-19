@@ -13,11 +13,23 @@
 ;; Elpa Config
 (load "packages.el")
 
+(require 'sublimity)
+(require 'sublimity-scroll)
+(sublimity-mode t)
+
 ;; Flycheck
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
+;; Backup
+(setq backup-by-copying      t
+      backup-directory-alist '(("." . "~/.saves"))
+      delete-old-versions    t
+      kept-new-versions      6
+      kept-old-versions      2
+      version-control        t)
+
 ;; Look and Feel
-(set-frame-parameter nil                   'font "Inconsolata-10")
+(set-frame-parameter nil                   'font "Consolas-10")
 (setq                inhibit-splash-screen t)
 
 (tool-bar-mode       -1)
@@ -77,7 +89,8 @@
 (defun maybe-cmake-project-hook ()
   "Function to determine if projects use CMake or regular Make."
   (if (file-exists-p "CMakeLists.txt") (cmake-project-mode)))
-(add-hook 'c-mode-hook 'maybe-cmake-project-hook)
+
+(add-hook 'c-mode-hook   'maybe-cmake-project-hook)
 (add-hook 'c++-mode-hook 'maybe-cmake-project-hook)
 
 ;;;; Clojure
