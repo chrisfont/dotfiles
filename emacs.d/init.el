@@ -29,6 +29,8 @@
       version-control        t)
 
 ;; Look and Feel
+(global-font-lock-mode t)
+
 (set-frame-parameter nil                   'font "Consolas-10")
 (setq                inhibit-splash-screen t)
 
@@ -36,6 +38,8 @@
 
 (load-theme          'monokai              t)
 (column-number-mode  t)
+(global-linum-mode   t)
+(global-hl-line-mode t)
 
 (setq-default indent-tabs-mode  nil)
 
@@ -119,6 +123,10 @@
 			  (local-set-key (kbd "C-c i") 'go-goto-imports)))
 (add-hook 'go-mode-hook (lambda ()
 			  (local-set-key (kbd "C-c C-i") 'go-errcheck)))
+
+;;; Groovy Modes
+(add-to-list 'auto-mode-alist        '("\.groovy$" . groovy-mode))
+(add-to-list 'interpreter-mode-alist '("groovy"    . groovy-mode))
 
 ;;; Haskell Modes
 (require 'haskell-mode)
