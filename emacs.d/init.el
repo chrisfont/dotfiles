@@ -9,6 +9,8 @@
 
 ;; General Config
 (add-to-list 'load-path "~/.emacs.d/")
+(defalias 'yes-or-no-p 'y-or-n-p)
+
 
 ;; Elpa Config
 (load "packages.el")
